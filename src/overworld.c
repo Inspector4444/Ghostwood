@@ -4026,3 +4026,24 @@ static void Task_OvwldCredits_WaitFade(u8 taskId)
         DestroyTask(taskId);
     }
 }
+
+#ifndef RELEASE
+void CB2_NewGame_Debug(void)
+{
+    FieldClearVBlankHBlankCallbacks();
+    StopMapMusic();
+    ResetSafariZoneFlag_();
+    NewGameInitData_Debug();
+    ResetInitialPlayerAvatarState();
+    PlayTimeCounter_Start();
+    ScriptContext_Init();
+    UnlockPlayerFieldControls();
+    gFieldCallback = FieldCB_WarpExitFadeFromBlack;
+    gFieldCallback2 = NULL;
+    DoMapLoadLoop(&gMain.state);
+    SetFieldVBlankCallback();
+	SetMainCallback1(CB1_Overworld);
+    SetMainCallback2(CB2_LoadMap);
+	RtcCalcLocalTimeOffset(0, 10, 0, 0);
+}
+#endif

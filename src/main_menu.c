@@ -908,7 +908,7 @@ static bool8 HandleMainMenuInput(u8 taskId)
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        IsWirelessAdapterConnected();   // why bother calling this here? debug? Task_HandleMainMenuAPressed will check too
+        // IsWirelessAdapterConnected();   // why bother calling this here? debug? Task_HandleMainMenuAPressed will check too
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
         gTasks[taskId].func = Task_HandleMainMenuAPressed;
     }
@@ -1091,7 +1091,12 @@ static void Task_HandleMainMenuAPressed(u8 taskId)
 
             gPlttBufferUnfaded[0] = RGB_BLACK;
             gPlttBufferFaded[0] = RGB_BLACK;
-            gTasks[taskId].func = Task_NewGameBirchSpeech_Init;
+			#ifdef RELEASE
+				gTasks[taskId].func = Task_NewGameBirchSpeech_Init;
+			#else
+				SetMainCallback2(CB2_NewGame_Debug);
+				DestroyTask(taskId);
+			#endif
             break;
         case ACTION_CONTINUE:
             gPlttBufferUnfaded[0] = RGB_BLACK;

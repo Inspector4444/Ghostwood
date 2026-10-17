@@ -166,6 +166,9 @@ void UpdatePalettesWithTime(u32);
 void CB2_Overworld(void);
 void SetMainCallback1(void (*cb)(void));
 void CB2_NewGame(void);
+#ifndef RELEASE
+void CB2_NewGame_Debug(void);
+#endif
 void CB2_WhiteOut(void);
 void CB2_LoadMap(void);
 void CB2_ReturnToFieldContestHall(void);

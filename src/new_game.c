@@ -52,6 +52,7 @@
 #include "constants/items.h"
 #include "difficulty.h"
 #include "follower_npc.h"
+#include "string_util.h"
 
 extern const u8 EventScript_ResetAllMapFlags[];
 extern const u8 EventScript_ResetAllMapFlagsFrlg[];
@@ -157,6 +158,50 @@ void ResetMenuAndMonGlobals(void)
     ResetBagScrollPositions();
     ResetPokeblockScrollPositions();
 }
+
+#ifndef RELEASE
+static void CompletePokedex(void)
+{
+    u16 i;
+
+    for (i = 1; i < NATIONAL_DEX_COUNT; i++) {
+        GetSetPokedexFlag(i, FLAG_SET_SEEN);
+        GetSetPokedexFlag(i, FLAG_SET_CAUGHT);
+    }
+
+    FlagSet(FLAG_SYS_POKEDEX_GET);
+    FlagSet(FLAG_SYS_NATIONAL_DEX);
+
+    EnableNationalPokedex();
+}
+
+static void SetPlayerNameAndGender(void)
+{
+    static const u8 ugh[] = _("Tester");
+    StringCopy(gSaveBlock2Ptr->playerName, ugh);
+
+    gSaveBlock2Ptr->playerGender = MALE;
+}
+
+void NewGameInitData_Debug(void)
+{
+    SetPlayerNameAndGender();
+    NewGameInitData();
+
+    CompletePokedex();
+    FlagSet(FLAG_SYS_POKEMON_GET);
+    FlagSet(FLAG_SYS_POKENAV_GET);
+    FlagSet(FLAG_SYS_B_DASH);
+
+    SetWarpDestination(
+        MAP_GROUP(MAP_MAUVILLE_CITY_POKEMON_CENTER_1F),
+        MAP_NUM(MAP_MAUVILLE_CITY_POKEMON_CENTER_1F),
+        WARP_ID_NONE, 10, 2
+    );
+
+    WarpIntoMap();
+}
+#endif
 
 void NewGameInitData(void)
 {

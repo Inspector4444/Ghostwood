@@ -41,6 +41,7 @@
 #include "pokedex.h"
 #include "mail.h"
 #include "field_weather.h"
+#include "zombie_battle.h"
 #include "constants/abilities.h"
 #include "constants/battle_anim.h"
 #include "constants/battle_move_effects.h"
@@ -701,6 +702,10 @@ bool32 TryRunFromBattle(enum BattlerId battler)
     else if (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_TRAINER_HILL) && gBattleTypeFlags & BATTLE_TYPE_TRAINER)
     {
         effect = TRUE;
+    }
+    else if (IsZombieBattle())
+    {
+        effect = ZombieBattle_RollFlee(); 
     }
     else if (CanPlayerForfeitNormalTrainerBattle())
     {

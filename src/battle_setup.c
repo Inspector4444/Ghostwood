@@ -59,6 +59,8 @@
 #include "constants/trainers.h"
 #include "constants/trainer_hill.h"
 #include "constants/weather.h"
+#include "zombie_battle.h"
+#include "zombie_horde.h"
 
 enum TransitionType
 {
@@ -266,6 +268,7 @@ static void Task_BattleStart(u8 taskId)
             RestartWildEncounterImmunitySteps();
             ClearPoisonStepCounter();
             DespawnOWEOnBattleStart();
+			ZombieBattle_OnTransitionDone();
             DestroyTask(taskId);
         }
         break;
@@ -497,6 +500,8 @@ static void DoTrainerBattle(void)
     IncrementGameStat(GAME_STAT_TRAINER_BATTLES);
     TryUpdateGymLeaderRematchFromTrainer();
 }
+
+#include "battle_setup_zombie.h"
 
 static void DoBattlePyramidTrainerHillBattle(void)
 {

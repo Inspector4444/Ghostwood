@@ -4038,6 +4038,9 @@ static u32 GetTrainerMoneyToGive(u16 trainerId)
     return moneyReward;
 }
 
+#include "zombie_battle.h"
+extern const u8 BattleScript_PayDayMoneyAndPickUpItems[];
+
 static void Cmd_getmoneyreward(void)
 {
     CMD_ARGS();
@@ -4047,6 +4050,12 @@ static void Cmd_getmoneyreward(void)
 
     if (gBattleOutcome == B_OUTCOME_WON)
     {
+        if (IsZombieBattle())
+        {
+            // no "got ¥X" message: skip to the Pay Day / Pickup part
+            gBattlescriptCurrInstr = BattleScript_PayDayMoneyAndPickUpItems;
+            return;
+        }
         money = GetTrainerMoneyToGive(TRAINER_BATTLE_PARAM.opponentA);
         if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
             money += GetTrainerMoneyToGive(TRAINER_BATTLE_PARAM.opponentB);

@@ -16877,3 +16877,51 @@ Double Battle: No
 Kyogre
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+=== TRAINER_ZOMBIE_A ===
+Name: Foe
+Class: Zombie A
+Pic: Hiker
+Gender: Male
+Music: Male
+AI: Zombie Trainer
+
+SPECIES_NONE
+Level: 1
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+=== TRAINER_ZOMBIE_B ===
+Name: Cohort
+Class: Zombie B
+Pic: Hiker
+Gender: Male
+Music: Male
+AI: Zombie Trainer
+
+SPECIES_NONE
+Level: 1
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+=== TRAINER_ZOMBIE_2A ===
+Name: Foe
+Class: Zombie 2A
+Pic: Leaf
+Gender: Female
+Music: Female
+AI: Zombie Trainer
+
+SPECIES_NONE
+Level: 1
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+=== TRAINER_ZOMBIE_2B ===
+Name: Cohort
+Class: Zombie 2B
+Pic: Leaf
+Gender: Female
+Music: Female
+AI: Zombie Trainer
+
+SPECIES_NONE
+Level: 1
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe

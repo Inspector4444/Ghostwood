@@ -64,6 +64,7 @@
 #include "util.h"
 #include "wild_encounter.h"
 #include "window.h"
+#include "zombie_battle.h"
 #include "constants/abilities.h"
 #include "constants/battle_ai.h"
 #include "constants/battle_move_effects.h"
@@ -414,6 +415,11 @@ const struct TrainerClass gTrainerClasses[TRAINER_CLASS_COUNT] =
     [TRAINER_CLASS_RUIN_MANIAC_FRLG] =     { _("RUIN MANIAC"), 12 },
     [TRAINER_CLASS_LADY_FRLG] =            { _("LADY"), 50 },
     [TRAINER_CLASS_PAINTER_FRLG] =         { _("PAINTER"), 4 },
+	
+    [TRAINER_CLASS_ZOMBIE_A] =         { _("ZOMBIE"), 0 },
+    [TRAINER_CLASS_ZOMBIE_B] =         { _("ZOMBIE"), 0 },
+    [TRAINER_CLASS_ZOMBIE_2A] =         { _("ZOMBIE"), 0 },
+    [TRAINER_CLASS_ZOMBIE_2B] =         { _("ZOMBIE"), 0 },
 };
 
 static void (*const sTurnActionsFuncsTable[])(void) =
@@ -4049,6 +4055,7 @@ static void HandleTurnActionSelectionState(void)
                     return;
                 }
                 else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER
+                      && !IsZombieBattle()
                       && !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK))
                       && gBattleResources->bufferB[battler][1] == B_ACTION_RUN)
                 {
@@ -5083,7 +5090,8 @@ static void HandleEndTurn_BattleWon(void)
     else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && !(gBattleTypeFlags & BATTLE_TYPE_LINK))
     {
         BattleStopLowHpSound();
-        gBattlescriptCurrInstr = BattleScript_LocalTrainerBattleWon;
+        gBattlescriptCurrInstr = IsZombieBattle() ? BattleScript_PayDayMoneyAndPickUpItems // TODO: decide about victory music
+                                                  : BattleScript_LocalTrainerBattleWon;
 
         switch (GetTrainerClassFromId(TRAINER_BATTLE_PARAM.opponentA))
         {
@@ -5831,6 +5839,9 @@ s32 Factorial(s32 n)
 bool32 CanPlayerForfeitNormalTrainerBattle(void)
 {
     if (!B_RUN_TRAINER_BATTLE)
+        return FALSE;
+	
+    if (IsZombieBattle()) //its a flee not forfeit
         return FALSE;
 
     if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER)

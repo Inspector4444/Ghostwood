@@ -35,6 +35,7 @@ struct WildEncounterTypes
     const struct WildPokemonInfo *rockSmashMonsInfo;
     const struct WildPokemonInfo *fishingMonsInfo;
     const struct WildPokemonInfo *hiddenMonsInfo;
+	const struct WildPokemonInfo *zombieMonsInfo;
 };
 
 struct WildPokemonHeader
@@ -73,6 +74,8 @@ bool8 CheckFeebasAtCoords(s16 x, s16 y);
 u32 ChooseWildMonIndex_Land(void);
 u32 ChooseWildMonIndex_Water(void);
 u32 ChooseWildMonIndex_Rocks(void);
+u32 ChooseWildMonIndex_Zombie(void);
+const struct WildPokemonInfo *GetCurrentMapZombieMonsInfo(void);
 u32 ChooseHiddenMonIndex(void);
 bool32 MapHasNoEncounterData(void);
 enum TimeOfDay GetTimeOfDayForEncounters(u32 headerId, enum WildPokemonArea area);

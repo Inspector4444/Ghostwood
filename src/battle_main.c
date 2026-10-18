@@ -5082,10 +5082,12 @@ static void HandleEndTurn_BattleWon(void)
         BattleStopLowHpSound();
         gBattlescriptCurrInstr = BattleScript_FrontierTrainerBattleWon;
 
-        if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_FRONTIER_BRAIN)
-            PlayBGM(MUS_VICTORY_GYM_LEADER);
-        else
-            PlayBGM(MUS_VICTORY_TRAINER);
+		if (!IsZombieBattle())
+			if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_FRONTIER_BRAIN)
+				PlayBGM(MUS_VICTORY_GYM_LEADER);
+			else
+				PlayBGM(MUS_VICTORY_TRAINER);
+		}
     }
     else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && !(gBattleTypeFlags & BATTLE_TYPE_LINK))
     {
@@ -5093,28 +5095,31 @@ static void HandleEndTurn_BattleWon(void)
         gBattlescriptCurrInstr = IsZombieBattle() ? BattleScript_PayDayMoneyAndPickUpItems // TODO: decide about victory music
                                                   : BattleScript_LocalTrainerBattleWon;
 
-        switch (GetTrainerClassFromId(TRAINER_BATTLE_PARAM.opponentA))
-        {
-        case TRAINER_CLASS_ELITE_FOUR:
-        case TRAINER_CLASS_CHAMPION:
-            PlayBGM(MUS_VICTORY_LEAGUE);
-            break;
-        case TRAINER_CLASS_TEAM_AQUA:
-        case TRAINER_CLASS_TEAM_MAGMA:
-        case TRAINER_CLASS_AQUA_ADMIN:
-        case TRAINER_CLASS_AQUA_LEADER:
-        case TRAINER_CLASS_MAGMA_ADMIN:
-        case TRAINER_CLASS_MAGMA_LEADER:
-            PlayBGM(MUS_VICTORY_AQUA_MAGMA);
-            break;
-        case TRAINER_CLASS_LEADER:
-            PlayBGM(MUS_VICTORY_GYM_LEADER);
-            break;
-        default:
-            PlayBGM(MUS_VICTORY_TRAINER);
-            break;
-        }
-    }
+		if (!IsZombieBattle())
+		{
+			switch (GetTrainerClassFromId(TRAINER_BATTLE_PARAM.opponentA))
+			{
+			case TRAINER_CLASS_ELITE_FOUR:
+			case TRAINER_CLASS_CHAMPION:
+				PlayBGM(MUS_VICTORY_LEAGUE);
+				break;
+			case TRAINER_CLASS_TEAM_AQUA:
+			case TRAINER_CLASS_TEAM_MAGMA:
+			case TRAINER_CLASS_AQUA_ADMIN:
+			case TRAINER_CLASS_AQUA_LEADER:
+			case TRAINER_CLASS_MAGMA_ADMIN:
+			case TRAINER_CLASS_MAGMA_LEADER:
+				PlayBGM(MUS_VICTORY_AQUA_MAGMA);
+				break;
+			case TRAINER_CLASS_LEADER:
+				PlayBGM(MUS_VICTORY_GYM_LEADER);
+				break;
+			default:
+				PlayBGM(MUS_VICTORY_TRAINER);
+				break;
+			}
+		}
+	}
     else
     {
         gBattlescriptCurrInstr = BattleScript_PayDayMoneyAndPickUpItems;

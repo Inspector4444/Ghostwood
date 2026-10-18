@@ -16881,7 +16881,7 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 === TRAINER_ZOMBIE_A ===
 Name: Foe
 Class: Zombie A
-Pic: Hiker
+Pic: Zombie
 Gender: Male
 Music: Male
 AI: Zombie Trainer
@@ -16893,7 +16893,7 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 === TRAINER_ZOMBIE_B ===
 Name: Cohort
 Class: Zombie B
-Pic: Hiker
+Pic: Zombie
 Gender: Male
 Music: Male
 AI: Zombie Trainer
@@ -16905,7 +16905,7 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 === TRAINER_ZOMBIE_2A ===
 Name: Foe
 Class: Zombie 2A
-Pic: Leaf
+Pic: Zombie 2
 Gender: Female
 Music: Female
 AI: Zombie Trainer
@@ -16917,7 +16917,7 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 === TRAINER_ZOMBIE_2B ===
 Name: Cohort
 Class: Zombie 2B
-Pic: Leaf
+Pic: Zombie 2
 Gender: Female
 Music: Female
 AI: Zombie Trainer

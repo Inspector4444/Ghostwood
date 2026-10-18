@@ -9323,6 +9323,16 @@
       "border_height": 2,
       "border_width": 2,
       "layout_version": "frlg"
+    },
+    {
+      "id": "LAYOUT_SEWER_HOME",
+      "name": "SewerHome_Layout",
+      "width": 43,
+      "height": 38,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_SewerClear",
+      "border_filepath": "data/layouts/SewerHome/border.bin",
+      "blockdata_filepath": "data/layouts/SewerHome/map.bin"
     }
   ]
 }

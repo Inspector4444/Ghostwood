@@ -1,3 +1,26 @@
+const u32 gTilesetTiles_SewerClear[] = INCGFX_U32("data/tilesets/secondary/sewer_clear/tiles.png", ".4bpp.fastSmol", "-num_tiles 211 -Wnum_tiles");
+
+const u16 gTilesetPalettes_SewerClear[][16] =
+{
+    INCGFX_U16("data/tilesets/secondary/sewer_clear/palettes/00.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/sewer_clear/palettes/01.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/sewer_clear/palettes/02.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/sewer_clear/palettes/03.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/sewer_clear/palettes/04.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/sewer_clear/palettes/05.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/sewer_clear/palettes/06.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/sewer_clear/palettes/07.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/sewer_clear/palettes/08.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/sewer_clear/palettes/09.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/sewer_clear/palettes/10.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/sewer_clear/palettes/11.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/sewer_clear/palettes/12.pal", ".gbapal"),
+};
+
+///////////////////////////////////////////////////////
+// VANILLA                                           //
+///////////////////////////////////////////////////////
+
 const u32 gTilesetTiles_SecretBase[] = INCGFX_U32("data/tilesets/primary/secret_base/tiles.png", ".4bpp");
 
 const u16 gTilesetPalettes_SecretBase[][16] =

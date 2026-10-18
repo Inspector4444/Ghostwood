@@ -3,6 +3,25 @@
 // Whether a palette has a night version, located at ((x + 9) % 16).pal
 #define SWAP_PAL(x) ((x) < NUM_PALS_IN_PRIMARY ? 1 << (x) : 1 << ((x) - NUM_PALS_IN_PRIMARY))
 
+///////////////////////////////////////////////////////
+// CUSTOM                                            //
+///////////////////////////////////////////////////////
+
+const struct Tileset gTileset_SewerClear =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_SewerClear,
+    .palettes = gTilesetPalettes_SewerClear,
+    .metatiles = gMetatiles_SewerClear,
+    .metatileAttributes = gMetatileAttributes_SewerClear,
+    .callback = NULL,
+};
+
+///////////////////////////////////////////////////////
+// VANILLA                                           //
+///////////////////////////////////////////////////////
+
 const struct Tileset gTileset_SecretBase =
 {
     .isCompressed = FALSE,

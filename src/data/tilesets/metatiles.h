@@ -1,3 +1,8 @@
+const u16 gMetatiles_SewerClear[] = INCBIN_U16("data/tilesets/secondary/sewer_clear/metatiles.bin");
+const u16 gMetatileAttributes_SewerClear[] = INCBIN_U16("data/tilesets/secondary/sewer_clear/metatile_attributes.bin");
+
+///////////////////////////////
+
 const u16 gMetatiles_SecretBasePrimary[] = INCBIN_U16("data/tilesets/primary/secret_base/metatiles.bin");
 const u16 gMetatileAttributes_SecretBasePrimary[] = INCBIN_U16("data/tilesets/primary/secret_base/metatile_attributes.bin");
 

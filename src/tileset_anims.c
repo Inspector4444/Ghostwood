@@ -1432,3 +1432,40 @@ void InitTilesetAnim_CeladonGym(void)
     sSecondaryTilesetAnimCallback = TilesetAnim_CeladonGym;
 }
 
+///////////////////////////////////////////////////////
+// CUSTOM                                            //
+///////////////////////////////////////////////////////
+
+static void TilesetAnim_SewerClear(u16);
+static void QueueAnimTiles_Sewer_Clear(u16);
+
+const u16 gTilesetAnims_Sewer_Water_Frame0[] = INCGFX_U16("data/tilesets/secondary/sewer_clear/anim/0.png", ".4bpp");
+const u16 gTilesetAnims_Sewer_Water_Frame1[] = INCGFX_U16("data/tilesets/secondary/sewer_clear/anim/1.png", ".4bpp");
+const u16 gTilesetAnims_Sewer_Water_Frame2[] = INCGFX_U16("data/tilesets/secondary/sewer_clear/anim/2.png", ".4bpp");
+const u16 gTilesetAnims_Sewer_Water_Frame3[] = INCGFX_U16("data/tilesets/secondary/sewer_clear/anim/3.png", ".4bpp");
+
+const u16 *const gTilesetAnims_Sewer_Water[] = {
+    gTilesetAnims_Sewer_Water_Frame0,
+    gTilesetAnims_Sewer_Water_Frame1,
+    gTilesetAnims_Sewer_Water_Frame2,
+    gTilesetAnims_Sewer_Water_Frame3,
+};
+
+static void TilesetAnim_Sewer_Clear(u16 timer)
+{
+    if (timer % 8 == 0)
+        QueueAnimTiles_Sewer_Clear(timer / 8);
+}
+
+void InitTilesetAnim_Sewer_Clear(void)
+{
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = TilesetAnim_Sewer_Clear;
+}
+
+static void QueueAnimTiles_Sewer_Clear(u16 timer)
+{
+    u8 i = timer % ARRAY_COUNT(gTilesetAnims_Sewer_Water);
+    AppendTilesetAnimToBuffer(gTilesetAnims_Sewer_Water[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(8)), 30 * TILE_SIZE_4BPP);
+}

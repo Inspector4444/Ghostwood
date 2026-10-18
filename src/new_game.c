@@ -194,9 +194,9 @@ void NewGameInitData_Debug(void)
     FlagSet(FLAG_SYS_B_DASH);
 
     SetWarpDestination(
-        MAP_GROUP(MAP_MAUVILLE_CITY_POKEMON_CENTER_1F),
-        MAP_NUM(MAP_MAUVILLE_CITY_POKEMON_CENTER_1F),
-        WARP_ID_NONE, 10, 2
+        MAP_GROUP(MAP_SEWER_HOME),
+        MAP_NUM(MAP_SEWER_HOME),
+        WARP_ID_NONE, 21, 31
     );
 
     WarpIntoMap();

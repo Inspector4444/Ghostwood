@@ -10,14 +10,15 @@
 #include "script.h"
 #include "task.h"
 #include "wild_encounter.h"
-#include "data/zombie_drops.h"
 #include "zombie_battle.h"
 #include "zombie_horde.h"
 #include "constants/trainers.h"
 
 static EWRAM_DATA u8 sFleeAttempts = 0;
-static EWRAM_DATA struct { u16 item; u8 qty; } sPendingDrops[2] = {0};
+static EWRAM_DATA struct { u16 item; } sPendingDrops[2] = {0};
 static EWRAM_DATA u8 sPendingDropCount = 0;
+
+#include "data/zombie_drops.h"
 
 enum
 {
@@ -88,29 +89,6 @@ void ZombieBattle_AddSecondZombie(struct ObjectEvent *z)
         return;
     sZB.objectIds[sZB.count++] = z - gObjectEvents;
     FaceAndFreeze(z);
-}
-
-static void RollDrop(void)
-{
-    u32 total = 0, roll, i;
-    const struct ZombieDrop *d = NULL;
-
-    if (sPendingDropCount >= ARRAY_COUNT(sPendingDrops))
-        return;
-    for (i = 0; i < ARRAY_COUNT(sZombieDrops); i++)
-        total += sZombieDrops[i].weight;
-    roll = Random() % total;
-    for (i = 0; i < ARRAY_COUNT(sZombieDrops); i++)
-    {
-        if (roll < sZombieDrops[i].weight)
-        {
-            d = &sZombieDrops[i];
-            break;
-        }
-        roll -= sZombieDrops[i].weight;
-    }
-    sPendingDrops[sPendingDropCount].item = d->item;
-    sPendingDropCount++;
 }
 
 void ZombieBattle_NextDrop(void)   // callnative: sets 0x8004 = item, 0x8005 = quantity
@@ -212,6 +190,7 @@ void ZombieBattle_OnTransitionDone(void)
 void ZombieBattle_Cleanup(void)
 {
     u32 i;
+	const struct ZombieDropPool *pool = GetDropPool();
 
     sPendingDropCount = 0;
     if (gBattleOutcome == B_OUTCOME_RAN)
@@ -223,9 +202,8 @@ void ZombieBattle_Cleanup(void)
     }
     for (i = 0; i < sZB.count; i++)
     {
-        if (IsZombieObjectEvent(&gObjectEvents[sZB.objectIds[i]])
-         && Random() % 100 < ZOMBIE_ITEM_DROP_PERCENT)
-            RollDrop();
+        if (IsZombieObjectEvent(&gObjectEvents[sZB.objectIds[i]]))
+            RollDrop(pool);
     }
     gSpecialVar_Result = (sPendingDropCount > 0);
 }

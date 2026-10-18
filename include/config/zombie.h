@@ -33,10 +33,8 @@
 #define ZOMBIE_CHASE_FAST           TRUE // TRUE: chase at normal walk speed, FALSE: slow walk
 #define ZOMBIE_MIN_MONS             1
 #define ZOMBIE_MAX_MONS             3
-#define ZOMBIE_ITEM_DROP_PERCENT    20    // chance per defeated zombie
-// Item drop is hardcoded in data/scripts/zombie.inc.
 
-#define ZOMBIE_FADE_FRAMES  40   // how long defeated zombies blink out
+#define ZOMBIE_FADE_FRAMES  40          // how long defeated zombies blink out
 #define ZOMBIE_FLEE_BASE_PERCENT   50   // chance on the first Run attempt
 #define ZOMBIE_FLEE_BONUS_PER_TRY  15   // added per failed attempt this battle
 #define ZOMBIE_GRACE_FRAMES        300  // ~5 s where zombies ignore you

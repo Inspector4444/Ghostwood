@@ -5083,6 +5083,7 @@ static void HandleEndTurn_BattleWon(void)
         gBattlescriptCurrInstr = BattleScript_FrontierTrainerBattleWon;
 
 		if (!IsZombieBattle())
+		{
 			if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_FRONTIER_BRAIN)
 				PlayBGM(MUS_VICTORY_GYM_LEADER);
 			else

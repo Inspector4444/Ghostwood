@@ -156,6 +156,51 @@
                 "species": "SPECIES_ZIGZAGOON"
               }
             ]
+          },
+          "zombie_mons": {
+            "encounter_rate": 1,
+            "mons": [
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_GRIMER"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_BULBASAUR"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_ELEKID"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_SNORLAX"
+              },
+              {
+                "min_level": 7,
+                "max_level": 7,
+                "species": "SPECIES_GRIMER"
+              },
+              {
+                "min_level": 7,
+                "max_level": 7,
+                "species": "SPECIES_BULBASAUR"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_ELECTABUZZ"
+              },
+              {
+                "min_level": 5,
+                "max_level": 5,
+                "species": "SPECIES_AZURILL"
+              }
+            ]
           }
         },
         {

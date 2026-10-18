@@ -13,7 +13,21 @@
   "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_INDOOR_2",
   "connections": null,
-  "object_events": [],
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN",
+      "x": 17,
+      "y": 24,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "SewerHome_MapScripts",
+      "flag": "FLAG_TEMP_1"
+    }
+  ],
   "warp_events": [
     {
       "warp_id": "WARP_ID_SEWER_TO_ROUTE",
@@ -25,10 +39,18 @@
     },
     {
       "warp_id": "WARP_ID_TEST",
-      "x": 21,
-      "y": 31,
+      "x": 16,
+      "y": 4,
       "elevation": 0,
-      "dest_map": "MAP_SEWER_HOME",
+      "dest_map": "MAP_PALLET_TOWN_PLAYERS_HOUSE_1F",
+      "dest_warp_id": "0"
+    },
+    {
+      "warp_id": "WARP_ID_LAB",
+      "x": 26,
+      "y": 4,
+      "elevation": 0,
+      "dest_map": "MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB",
       "dest_warp_id": "0"
     }
   ],

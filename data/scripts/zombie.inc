@@ -11,9 +11,8 @@ Ghostwood_EventScript_ZombieBattle::
 Ghostwood_EventScript_ZombieDropLoop::
 	callnative ZombieBattle_NextDrop
 	goto_if_eq VAR_RESULT, FALSE, Ghostwood_EventScript_ZombieDropDone
-	additem VAR_0x8004, VAR_0x8005
+	additem VAR_0x8004, 1
 	bufferitemname STR_VAR_1, VAR_0x8004
-	buffernumberstring STR_VAR_2, VAR_0x8005
 	goto_if_eq VAR_RESULT, FALSE, Ghostwood_EventScript_ZombieDropFull
 	msgbox Ghostwood_Text_ZombieDrop, MSGBOX_AUTOCLOSE
 	goto Ghostwood_EventScript_ZombieDropLoop
@@ -27,7 +26,7 @@ Ghostwood_EventScript_ZombieDropDone::
 	end
 
 Ghostwood_Text_ZombieDrop:
-	.string "It dropped {STR_VAR_1} x{STR_VAR_2}.$"
+	.string "It dropped {STR_VAR_1}.$"
 
 Ghostwood_Text_ZombieDropFull:
 	.string "It dropped {STR_VAR_1},\n"

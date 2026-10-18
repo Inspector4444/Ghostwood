@@ -110,7 +110,6 @@ static void RollDrop(void)
         roll -= sZombieDrops[i].weight;
     }
     sPendingDrops[sPendingDropCount].item = d->item;
-    sPendingDrops[sPendingDropCount].qty = d->minQty + Random() % (d->maxQty - d->minQty + 1);
     sPendingDropCount++;
 }
 
@@ -123,7 +122,6 @@ void ZombieBattle_NextDrop(void)   // callnative: sets 0x8004 = item, 0x8005 = q
     }
     sPendingDropCount--;
     gSpecialVar_0x8004 = sPendingDrops[sPendingDropCount].item;
-    gSpecialVar_0x8005 = sPendingDrops[sPendingDropCount].qty;
     gSpecialVar_Result = TRUE;
 }
 

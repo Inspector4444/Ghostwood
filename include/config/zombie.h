@@ -33,7 +33,7 @@
 #define ZOMBIE_CHASE_FAST           TRUE // TRUE: chase at normal walk speed, FALSE: slow walk
 #define ZOMBIE_MIN_MONS             1
 #define ZOMBIE_MAX_MONS             3
-#define ZOMBIE_ITEM_DROP_PERCENT  12    // chance per defeated zombie
+#define ZOMBIE_ITEM_DROP_PERCENT    20    // chance per defeated zombie
 // Item drop is hardcoded in data/scripts/zombie.inc.
 
 #define ZOMBIE_FADE_FRAMES  40   // how long defeated zombies blink out

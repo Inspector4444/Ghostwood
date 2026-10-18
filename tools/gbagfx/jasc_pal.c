@@ -135,6 +135,18 @@ void ReadJascPalette(char *path, struct Palette *palette)
         if (!ParseNumber(s, &end, 10, &blue))
             FATAL_ERROR("Failed to parse blue color component.\n");
 
+        if (*end == ' ')
+        {
+            int alpha;
+            s = end + 1;
+            if (*s < '0' || *s > '9')
+                FATAL_ERROR("Not an alpha component after blue. Garbage?\n");
+            if (!ParseNumber(s, &end, 10, &alpha))
+                FATAL_ERROR("Failed to parse alpha color component. Garbage?\n");
+            if (alpha < 0 || alpha > 255)
+                FATAL_ERROR("Alpha color component (%d) is outside the range [0, 255].\n", alpha);
+        }
+
         if (*end != 0)
             FATAL_ERROR("Garbage after blue color component.\n");
 

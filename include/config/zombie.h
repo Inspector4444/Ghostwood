@@ -4,6 +4,7 @@
 // ---- Ghostwood zombie hordes: tuning ----
 #define ZOMBIE_SYSTEM_ENABLED       TRUE
 // #define ZOMBIE_DIST_MANHATTAN // 4-dir step count / If undef, use CHEBYSHEV: 8-dir chess-like/square
+#define ZOMBIE_REMEMBER_FAINTS TRUE   // fled-from zombies keep their fainted mons out of the next fight
 
 // Chance (%) to add the 1st, 2nd, 3rd... mon, rolled in order; the chain stops at the first miss
 #define ZOMBIE_MON_PERCENTS  { 100, 50, 33 }

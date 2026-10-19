@@ -21,10 +21,12 @@
 
 struct ZombieState
 {
+    u16 despawnTimer;
+    u8 seed;            // drives this zombie's generated team, so the same zombie keeps the same team
+    u8 faintedMask;     // bit n = team member n (in generation order) has fainted
     bool8 aggro;
     bool8 defeated;
     bool8 despawning;
-    u16 despawnTimer;
 };
 
 static EWRAM_DATA struct ZombieState sZombie[ZOMBIE_LOCALID_COUNT] = {0};
@@ -59,6 +61,21 @@ bool8 ZombieHorde_IsDefeated(struct ObjectEvent *z)
 bool8 ZombieHorde_IsAggro(struct ObjectEvent *z)
 {
     return GetState(z)->aggro;
+}
+
+u8 ZombieHorde_GetSeed(const struct ObjectEvent *z)
+{
+    return GetState(z)->seed;
+}
+
+u8 ZombieHorde_GetFaintMask(const struct ObjectEvent *z)
+{
+    return GetState(z)->faintedMask;
+}
+
+void ZombieHorde_AddFaint(const struct ObjectEvent *z, u8 idx)
+{
+    GetState(z)->faintedMask |= 1 << idx;
 }
 
 const struct ZombieArea *ZombieHorde_GetCurrentArea(void)
@@ -378,6 +395,8 @@ static void TrySpawnZombie(void)
             st->defeated = FALSE;
             st->despawning = FALSE;
             st->despawnTimer = 0;
+            st->seed = Random();
+            st->faintedMask = 0;
         }
         return;
     }

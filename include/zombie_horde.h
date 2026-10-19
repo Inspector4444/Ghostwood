@@ -38,7 +38,10 @@ bool8 ZombieHorde_IsDefeated(struct ObjectEvent *zombie);
 // Used by the zombie movement type (event_object_movement.c).
 // dirs[] is filled with candidate directions, best first, terminated by DIR_NONE.
 u8 ZombieHorde_Think(struct ObjectEvent *zombie, u8 dirs[5]);
-u8 ZombieHorde_GetHopAction(struct ObjectEvent *z, u8 dir);
+u8   ZombieHorde_GetHopAction(struct ObjectEvent *z, u8 dir);
+u8   ZombieHorde_GetSeed(const struct ObjectEvent *z);
+u8   ZombieHorde_GetFaintMask(const struct ObjectEvent *z);
+void ZombieHorde_AddFaint(const struct ObjectEvent *z, u8 idx);
 bool8 ZombieHorde_CanStep(struct ObjectEvent *zombie, u8 dir);
 bool8 ZombieHorde_IsAggro(struct ObjectEvent *zombie);
 bool8 IsZombieObjectEvent(const struct ObjectEvent *objectEvent);

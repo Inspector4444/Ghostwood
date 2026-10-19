@@ -17,7 +17,7 @@ static bool8 MovementType_Zombie_Step0(struct ObjectEvent *objectEvent, struct S
 static bool8 MovementType_Zombie_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     u8 dirs[5];
-	u8 hop;
+    u8 hop;
     u32 i;
     u8 mode = ZombieHorde_Think(objectEvent, dirs);
 
@@ -38,6 +38,7 @@ static bool8 MovementType_Zombie_Step1(struct ObjectEvent *objectEvent, struct S
     }
     for (i = 0; dirs[i] != DIR_NONE; i++)
     {
+        // chasing zombies may hop ledges (checked first: a ledge tile reads as a collision)
         if (mode == ZOMBIE_THINK_CHASE && ZombieHorde_GetHopAction(objectEvent, dirs[i]) != MOVEMENT_ACTION_NONE)
             break;
         if (ZombieHorde_CanStep(objectEvent, dirs[i]) && !GetCollisionInDirection(objectEvent, dirs[i]))

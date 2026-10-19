@@ -26,6 +26,7 @@ void BattleSetup_FinalizeZombieBattle(bool8 twoOpponents, u16 trainerA, u16 trai
 
 void ZombieBattle_BeginFade(void);
 bool8 IsZombieBattle(void);
+void ZombieBattle_OnBattleEnd(void);
 bool8 ZombieBattle_RollFlee(void);
 void ZombieBattle_NextDrop(void);
 

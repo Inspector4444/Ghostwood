@@ -1,13 +1,13 @@
 #include "global.h"
-#include "zombie_flow.h"
 #include "fieldmap.h"
 #include "metatile_behavior.h"
+#include "zombie_flow.h"
 
 #define COST_BLOCKED 0xFE
 #define COST_NONE    0xFF
 
 static EWRAM_DATA u8 sCost[ZFLOW_SIZE][ZFLOW_SIZE] = {0};
-static EWRAM_DATA u8 sHopDir[ZFLOW_SIZE][ZFLOW_SIZE] = {0}; // DIR_NONE unless best route from here is a ledge hop
+static EWRAM_DATA u8 sHopDir[ZFLOW_SIZE][ZFLOW_SIZE] = {0}; // DIR_NONE unless the best route from here is a ledge hop
 static EWRAM_DATA s16 sOriginX = 0; // map coords of sCost[0][0]
 static EWRAM_DATA s16 sOriginY = 0;
 static EWRAM_DATA bool8 sValid = FALSE;
@@ -15,6 +15,18 @@ static EWRAM_DATA bool8 sValid = FALSE;
 static const s8 sDx[4] = { 0,  0, -1, 1};
 static const s8 sDy[4] = { 1, -1,  0, 0};
 static const u8 sDirs[4] = {DIR_SOUTH, DIR_NORTH, DIR_WEST, DIR_EAST};
+
+// Direction a ledge tile is hopped in, or DIR_NONE if the tile isn't a ledge
+static u8 GetLedgeDirAt(s16 x, s16 y)
+{
+    u8 b = MapGridGetMetatileBehaviorAt(x, y);
+
+    if (MetatileBehavior_IsJumpSouth(b)) return DIR_SOUTH;
+    if (MetatileBehavior_IsJumpNorth(b)) return DIR_NORTH;
+    if (MetatileBehavior_IsJumpWest(b))  return DIR_WEST;
+    if (MetatileBehavior_IsJumpEast(b))  return DIR_EAST;
+    return DIR_NONE;
+}
 
 bool8 ZombieFlow_IsInside(s16 x, s16 y)
 {
@@ -25,17 +37,6 @@ bool8 ZombieFlow_IsInside(s16 x, s16 y)
 void ZombieFlow_Invalidate(void)
 {
     sValid = FALSE;
-}
-
-static u8 GetLedgeDirAt(s16 x, s16 y)
-{
-    u8 b = MapGridGetMetatileBehaviorAt(x, y);
-
-    if (MetatileBehavior_IsJumpSouth(b)) return DIR_SOUTH;
-    if (MetatileBehavior_IsJumpNorth(b)) return DIR_NORTH;
-    if (MetatileBehavior_IsJumpWest(b))  return DIR_WEST;
-    if (MetatileBehavior_IsJumpEast(b))  return DIR_EAST;
-    return DIR_NONE;
 }
 
 void ZombieFlow_Build(s16 targetX, s16 targetY, ZombieFlowPassableFunc isPassable)
@@ -69,7 +70,7 @@ void ZombieFlow_Build(s16 targetX, s16 targetY, ZombieFlowPassableFunc isPassabl
         for (i = 0; i < 4; i++)
         {
             s32 nx = cx + sDx[i], ny = cy + sDy[i];
-            s32 px = nx + sDx[i], py = ny + sDy[i];   // tile beyond (nx,ny), a possible hop start
+            s32 px = nx + sDx[i], py = ny + sDy[i];   // tile beyond (nx,ny): a possible hop start
             s16 wx = sOriginX + nx, wy = sOriginY + ny;
             u8 ledge;
 
@@ -81,7 +82,8 @@ void ZombieFlow_Build(s16 targetX, s16 targetY, ZombieFlowPassableFunc isPassabl
             if (ledge != DIR_NONE || !isPassable(wx, wy))
             {
                 sCost[ny][nx] = COST_BLOCKED;
-                // a ledge we can hop toward the player: the tile behind it is a hop start
+                // A ledge that can be hopped toward the target: the tile behind it is a hop start.
+                // sDirs[i ^ 1] is the opposite of the direction we expanded in.
                 if (ledge != DIR_NONE && ledge == sDirs[i ^ 1]
                  && next + 1 < COST_BLOCKED
                  && px >= 0 && py >= 0 && px < ZFLOW_SIZE && py < ZFLOW_SIZE

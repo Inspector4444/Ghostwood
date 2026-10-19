@@ -3,7 +3,6 @@
   "name": "LittlerootTown",
   "layout": "LAYOUT_LITTLEROOT_TOWN",
   "music": "MUS_LITTLEROOT",
-  "region": "REGION_HOENN",
   "region_map_section": "MAPSEC_LITTLEROOT_TOWN",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",
@@ -18,6 +17,16 @@
       "map": "MAP_ROUTE101",
       "offset": 0,
       "direction": "up"
+    },
+    {
+      "map": "MAP_ROUTE401",
+      "offset": -25,
+      "direction": "up"
+    },
+    {
+      "map": "MAP_ROUTE401",
+      "offset": 0,
+      "direction": "dive"
     }
   ],
   "object_events": [
@@ -269,5 +278,6 @@
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "LittlerootTown_EventScript_MaysHouseSign"
     }
-  ]
+  ],
+  "region": "REGION_HOENN"
 }

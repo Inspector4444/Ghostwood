@@ -17,6 +17,7 @@ static bool8 MovementType_Zombie_Step0(struct ObjectEvent *objectEvent, struct S
 static bool8 MovementType_Zombie_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     u8 dirs[5];
+	u8 hop;
     u32 i;
     u8 mode = ZombieHorde_Think(objectEvent, dirs);
 
@@ -36,8 +37,12 @@ static bool8 MovementType_Zombie_Step1(struct ObjectEvent *objectEvent, struct S
         return TRUE;
     }
     for (i = 0; dirs[i] != DIR_NONE; i++)
+    {
+        if (mode == ZOMBIE_THINK_CHASE && ZombieHorde_GetHopAction(objectEvent, dirs[i]) != MOVEMENT_ACTION_NONE)
+            break;
         if (ZombieHorde_CanStep(objectEvent, dirs[i]) && !GetCollisionInDirection(objectEvent, dirs[i]))
             break;
+    }
     if (dirs[i] == DIR_NONE) // boxed in
     {
         SetMovementDelay(sprite, 8);
@@ -45,7 +50,13 @@ static bool8 MovementType_Zombie_Step1(struct ObjectEvent *objectEvent, struct S
         return TRUE;
     }
     SetObjectEventDirection(objectEvent, dirs[i]);
-    if (ZOMBIE_CHASE_FAST && mode == ZOMBIE_THINK_CHASE)
+    hop = (mode == ZOMBIE_THINK_CHASE) ? ZombieHorde_GetHopAction(objectEvent, dirs[i]) : MOVEMENT_ACTION_NONE;
+    if (hop != MOVEMENT_ACTION_NONE)
+    {
+        PlaySE(SE_LEDGE);
+        ObjectEventSetSingleMovement(objectEvent, sprite, hop);
+    }
+    else if (ZOMBIE_CHASE_FAST && mode == ZOMBIE_THINK_CHASE)
         ObjectEventSetSingleMovement(objectEvent, sprite, GetWalkNormalMovementAction(objectEvent->movementDirection));
     else
         ObjectEventSetSingleMovement(objectEvent, sprite, GetWalkSlowMovementAction(objectEvent->movementDirection));

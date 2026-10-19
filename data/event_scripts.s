@@ -1742,3 +1742,5 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/scripts/wild_encounter.inc"
 
 	.include "data/maps/SewerHome/scripts.inc"
+
+	.include "data/maps/Route401/scripts.inc"

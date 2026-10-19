@@ -9333,6 +9333,16 @@
       "secondary_tileset": "gTileset_SewerClear",
       "border_filepath": "data/layouts/SewerHome/border.bin",
       "blockdata_filepath": "data/layouts/SewerHome/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE401",
+      "name": "Route401_Layout",
+      "width": 80,
+      "height": 16,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/Route401/border.bin",
+      "blockdata_filepath": "data/layouts/Route401/map.bin"
     }
   ]
 }

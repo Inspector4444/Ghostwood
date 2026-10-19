@@ -17,14 +17,14 @@
 #define ZOMBIE_SPAWN_DIST_MIN       10 // should be a safe distance, w is 7.something tiles
 #define ZOMBIE_SPAWN_DIST_MAX       16
 #define ZOMBIE_DESPAWN_DIST         32
-#define ZOMBIE_AGGRO_RADIUS         4
+#define ZOMBIE_AGGRO_RADIUS         3
 // Tiles measured as Chebyshev (max(|dx|, |dy|))
 // #define ZOMBIE_SPAWN_DIST_MIN       9
 // #define ZOMBIE_SPAWN_DIST_MAX       13
 // #define ZOMBIE_DESPAWN_DIST         24
 // #define ZOMBIE_AGGRO_RADIUS         3
 
-#define ZOMBIE_SPAWN_INTERVAL_MIN   180   // frames between spawn attempts
+#define ZOMBIE_SPAWN_INTERVAL_MIN   40   // frames between spawn attempts
 #define ZOMBIE_SPAWN_INTERVAL_MAX   480
 #define ZOMBIE_SPAWN_TRIES          12
 

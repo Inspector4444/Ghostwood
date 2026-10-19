@@ -75,7 +75,8 @@
     "gMapGroup_IndoorTwoIslandRoute_Frlg",
     "gMapGroup_IndoorSixIslandRoute_Frlg",
     "gMapGroup_IndoorSevenIslandRoute_Frlg",
-    "gMapGroup_SafeZones"
+    "gMapGroup_SafeZones",
+    "gMapGroup_SinnohExteriors"
   ],
   "gMapGroup_TownsAndRoutes": [
     "PetalburgCity",
@@ -1164,5 +1165,8 @@
   ],
   "gMapGroup_SafeZones": [
     "SewerHome"
+  ],
+  "gMapGroup_SinnohExteriors": [
+    "Route401"
   ]
 }

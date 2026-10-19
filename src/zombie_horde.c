@@ -14,6 +14,7 @@
 #include "zombie_flow.h"
 #include "zombie_horde.h"
 #include "constants/event_objects.h"
+#include "constants/event_object_movement.h"
 #include "constants/maps.h"
 #include "constants/items.h"
 #include "data/zombie_hordes.h"
@@ -22,6 +23,8 @@ struct ZombieState
 {
     bool8 aggro;
     bool8 defeated;
+    bool8 despawning;
+    u16 despawnTimer;
 };
 
 static EWRAM_DATA struct ZombieState sZombie[ZOMBIE_LOCALID_COUNT] = {0};
@@ -76,6 +79,15 @@ static struct ZombieState *GetState(const struct ObjectEvent *z)
     if (slot >= ZOMBIE_LOCALID_COUNT)
         return &sZombie[0]; // should never happen
     return &sZombie[slot];
+}
+
+static void StartDespawn(struct ObjectEvent *z)
+{
+    struct ZombieState *st = GetState(z);
+    if (st->despawning)
+        return;
+    st->despawning = TRUE;
+    st->despawnTimer = 0;
 }
 
 static u32 GetZombieDistance(s16 x1, s16 y1, s16 x2, s16 y2)
@@ -154,6 +166,21 @@ bool8 ZombieHorde_CanStep(struct ObjectEvent *z, u8 dir)
     return IsInsideCurrentMap(x, y);
 }
 
+// Returns the 2-tile jump action if stepping `dir` is a ledge hop with a free landing,
+// otherwise MOVEMENT_ACTION_NONE.
+u8 ZombieHorde_GetHopAction(struct ObjectEvent *z, u8 dir)
+{
+    s16 x = z->currentCoords.x, y = z->currentCoords.y;
+
+    MoveCoords(dir, &x, &y);   // the ledge tile
+    if (GetLedgeJumpDirection(x, y, dir) != dir)
+        return MOVEMENT_ACTION_NONE;
+    MoveCoords(dir, &x, &y);   // the landing tile
+    if (!IsTileWalkable(x, y) || IsTileOccupied(x, y))
+        return MOVEMENT_ACTION_NONE;
+    return GetJump2MovementAction(dir);
+}
+
 static bool8 HasLineOfSight(s16 zx, s16 zy, s16 px, s16 py)
 {
     s16 x = zx, y = zy;
@@ -199,20 +226,21 @@ static u8 OppositeDir(u8 d)
 }
 
 u8 ZombieHorde_Think(struct ObjectEvent *z, u8 dirs[5])
-{	
+{
     struct ObjectEvent *player = GetPlayerObject();
     struct ZombieState *st = GetState(z);
     s16 zx = z->currentCoords.x, zy = z->currentCoords.y;
     s16 px = player->currentCoords.x, py = player->currentCoords.y;
     u32 n = 0, d = GetZombieDistance(zx, zy, px, py), i, start;
     u8 mode = ZOMBIE_THINK_WANDER;
-	
-    if (st->defeated)
+
+    if (st->defeated || st->despawning)
     {
         dirs[0] = DIR_NONE;
         return ZOMBIE_THINK_CHASE;
     }
-	if (sGraceTimer) st->aggro = FALSE;
+    if (sGraceTimer)
+        st->aggro = FALSE;
     if (!st->aggro && sGraceTimer == 0)
     {
         if (d <= ZOMBIE_AGGRO_RADIUS || HasLineOfSight(zx, zy, px, py))
@@ -344,25 +372,33 @@ static void TrySpawnZombie(void)
         id = SpawnSpecialObjectEventParameterized(sZombieLooks[Random() % ARRAY_COUNT(sZombieLooks)].gfxId,
                                                   MOVEMENT_TYPE_ZOMBIE, localId, x, y, MapGridGetElevationAt(x, y));
         if (id < OBJECT_EVENTS_COUNT)
-            GetState(&gObjectEvents[id])->aggro = FALSE;
-            GetState(&gObjectEvents[id])->defeated = FALSE;
+        {
+            struct ZombieState *st = GetState(&gObjectEvents[id]);
+            st->aggro = FALSE;
+            st->defeated = FALSE;
+            st->despawning = FALSE;
+            st->despawnTimer = 0;
+        }
         return;
     }
 }
 
+// Fades every zombie out (used on map change, e.g. crossing a connection)
 void ZombieHorde_RemoveAll(void)
 {
     u32 i;
     for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
         if (IsZombieObjectEvent(&gObjectEvents[i]))
-            RemoveObjectEvent(&gObjectEvents[i]);
+            StartDespawn(&gObjectEvents[i]);
 }
 
 // ---- contact ----
 void ZombieHorde_OnContact(struct ObjectEvent *z)
 {
-	if (ZombieHorde_IsDefeated(z)) return;
-	if (sGraceTimer) return;
+    if (ZombieHorde_IsDefeated(z) || GetState(z)->despawning)
+        return;
+    if (sGraceTimer)
+        return;
     if (ZombieBattle_IsPending())
     {
         ZombieBattle_AddSecondZombie(z); // transition still running: becomes a double battle
@@ -385,7 +421,7 @@ static void CheckContacts(void)
         struct Sprite *zs;
         s32 dx, dy;
 
-        if (!IsZombieObjectEvent(z) || ZombieBattle_IsRegistered(z) || ZombieHorde_IsDefeated(z))
+        if (!IsZombieObjectEvent(z) || ZombieBattle_IsRegistered(z) || ZombieHorde_IsDefeated(z) || GetState(z)->despawning)
             continue;
         // cheap tile prefilter (coords are step destinations, so allow slack)
         if (GetZombieDistance(z->currentCoords.x, z->currentCoords.y, player->currentCoords.x, player->currentCoords.y) > 2)
@@ -408,23 +444,62 @@ void ZombieHorde_StartGrace(void)
         sZombie[i].aggro = FALSE;
 }
 
+// ---- despawn fade (dither: thins out the visible frames over time) ----
+// Bayer-style order so the visible frames spread out instead of clumping
+static const u8 sFadeOrder[8] = { 0, 4, 2, 6, 1, 5, 3, 7 };
+
+// elapsed: frames since the fade began. Returns TRUE once fully faded.
+static bool8 ZombieHorde_FadeStep(struct ObjectEvent *obj, u16 elapsed)
+{
+    u32 shown = 8 - (8 * elapsed) / ZOMBIE_FADE_FRAMES;   // 8..0 of every 8 frames visible
+
+    obj->invisible = (sFadeOrder[elapsed & 7] >= shown);
+    return elapsed >= ZOMBIE_FADE_FRAMES;
+}
+
+static void UpdateDespawns(void)
+{
+    u32 i;
+    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+    {
+        struct ObjectEvent *z = &gObjectEvents[i];
+        struct ZombieState *st;
+
+        if (!IsZombieObjectEvent(z))
+            continue;
+        st = GetState(z);
+        if (!st->despawning)
+            continue;
+        if (ZombieHorde_FadeStep(z, st->despawnTimer++))
+        {
+            st->despawning = FALSE;
+            st->despawnTimer = 0;
+            st->aggro = FALSE;
+            st->defeated = FALSE;
+            RemoveObjectEvent(z);
+        }
+    }
+}
+
 // ---- per-frame ----
 void ZombieHorde_Update(void)
 {
     struct ObjectEvent *player;
     u32 i;
-	
-	if (sGraceTimer) sGraceTimer--;
+
+    if (sGraceTimer)
+        sGraceTimer--;
+    UpdateDespawns(); // before any early return, so fades always finish
 
     if (!ZOMBIE_SYSTEM_ENABLED || gPlayerAvatar.objectEventId >= OBJECT_EVENTS_COUNT)
         return;
 
-    // Map changed (warp, save load): wipe leftovers, refresh area
-	if (!sMapKnown || gSaveBlock1Ptr->location.mapGroup != sLastMapGroup || gSaveBlock1Ptr->location.mapNum != sLastMapNum)
-	{
-		sMapKnown = TRUE;
-		sLastMapGroup = gSaveBlock1Ptr->location.mapGroup;
-		sLastMapNum = gSaveBlock1Ptr->location.mapNum;
+    // Map changed (warp, connection, save load): fade leftovers, refresh area
+    if (!sMapKnown || gSaveBlock1Ptr->location.mapGroup != sLastMapGroup || gSaveBlock1Ptr->location.mapNum != sLastMapNum)
+    {
+        sMapKnown = TRUE;
+        sLastMapGroup = gSaveBlock1Ptr->location.mapGroup;
+        sLastMapNum = gSaveBlock1Ptr->location.mapNum;
         ZombieHorde_RemoveAll();
         ZombieBattle_Reset();
         sArea = ZombieHorde_GetCurrentArea();
@@ -454,12 +529,13 @@ void ZombieHorde_Update(void)
         ZombieFlow_Build(sLastPlayerX, sLastPlayerY, IsTileWalkable);
     }
 
-    // Far zombies despawn
+    // Far zombies fade out
     for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
     {
         struct ObjectEvent *z = &gObjectEvents[i];
-        if (IsZombieObjectEvent(z) && GetZombieDistance(z->currentCoords.x, z->currentCoords.y, player->currentCoords.x, player->currentCoords.y) > ZOMBIE_DESPAWN_DIST)
-            RemoveObjectEvent(z);
+        if (IsZombieObjectEvent(z)
+         && GetZombieDistance(z->currentCoords.x, z->currentCoords.y, player->currentCoords.x, player->currentCoords.y) > ZOMBIE_DESPAWN_DIST)
+            StartDespawn(z);
     }
 
     // like the OWE spawner: don't spawn while the player is mid step

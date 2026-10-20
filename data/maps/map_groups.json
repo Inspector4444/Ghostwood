@@ -1164,7 +1164,8 @@
     "SevenIsland_SevaultCanyon_House_Frlg"
   ],
   "gMapGroup_SafeZones": [
-    "SewerHome"
+    "SewerHome",
+    "HomeBarracks"
   ],
   "gMapGroup_SinnohExteriors": [
     "Route401"

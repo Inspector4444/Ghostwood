@@ -2,7 +2,7 @@
   "id": "MAP_SEWER_HOME",
   "name": "SewerHome",
   "layout": "LAYOUT_SEWER_HOME",
-  "music": "MUS_ENCOUNTER_SUSPICIOUS",
+  "music": "MUS_TWINLEAF_SEWERS",
   "region_map_section": "MAPSEC_SEWER_TOWN",
   "requires_flash": false,
   "weather": "WEATHER_FOG_HORIZONTAL",

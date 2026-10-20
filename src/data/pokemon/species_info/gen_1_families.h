@@ -19824,7 +19824,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .trainerOffset = 11,
         .frontPic = gMonFrontPic_Snorlax,
         .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 56) : MON_COORDS_SIZE(64, 64),
-        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 5 : 1,
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 5 : 5,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(1, 50),
             ANIMCMD_FRAME(1, 50),

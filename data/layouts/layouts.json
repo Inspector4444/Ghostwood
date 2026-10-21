@@ -9350,9 +9350,19 @@
       "width": 26,
       "height": 15,
       "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_CableClub",
+      "secondary_tileset": "gTileset_OceanicMuseum",
       "border_filepath": "data/layouts/HomeBarracks/border.bin",
       "blockdata_filepath": "data/layouts/HomeBarracks/map.bin"
+    },
+    {
+      "id": "LAYOUT_HOME_DAWN_LAB",
+      "name": "HomeDawnLab_Layout",
+      "width": 9,
+      "height": 9,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Lab",
+      "border_filepath": "data/layouts/HomeDawnLab/border.bin",
+      "blockdata_filepath": "data/layouts/HomeDawnLab/map.bin"
     }
   ]
 }

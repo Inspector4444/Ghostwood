@@ -1165,7 +1165,8 @@
   ],
   "gMapGroup_SafeZones": [
     "SewerHome",
-    "HomeBarracks"
+    "HomeBarracks",
+    "HomeDawnLab"
   ],
   "gMapGroup_SinnohExteriors": [
     "Route401"

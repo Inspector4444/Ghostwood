@@ -1630,6 +1630,14 @@
     {
       "id": "MAPSEC_SEWER_TOWN",
       "name": "TWINLEAF SEWERS"
+    },
+    {
+      "id": "MAPSEC_HOMEBARRACKS",
+      "name": "TWINLEAF SEWERS"
+    },
+    {
+      "id": "MAPSEC_DAWNLAB",
+      "name": "TWINLEAF SEWERS"
     }
   ]
 }

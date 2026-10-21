@@ -2,19 +2,36 @@
   "id": "MAP_HOME_BARRACKS",
   "name": "HomeBarracks",
   "layout": "LAYOUT_HOME_BARRACKS",
-  "music": "MUS_DUMMY",
-  "region_map_section": "MAPSEC_ABANDONED_SHIP",
+  "music": "MUS_TWINLEAF_SEWERS",
+  "region_map_section": "MAPSEC_HOMEBARRACKS",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_NONE",
   "allow_cycling": false,
   "allow_escaping": false,
   "allow_running": false,
-  "show_map_name": true,
+  "show_map_name": false,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": null,
   "object_events": [],
-  "warp_events": [],
+  "warp_events": [
+    {
+      "warp_id": "Twinleaf_Sewers",
+      "x": 12,
+      "y": 14,
+      "elevation": 0,
+      "dest_map": "MAP_SEWER_HOME",
+      "dest_warp_id": "WARP_ID_TEST"
+    },
+    {
+      "warp_id": "Twinleaf_Sewers",
+      "x": 13,
+      "y": 14,
+      "elevation": 0,
+      "dest_map": "MAP_SEWER_HOME",
+      "dest_warp_id": "WARP_ID_TEST"
+    }
+  ],
   "coord_events": [],
   "bg_events": []
 }

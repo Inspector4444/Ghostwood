@@ -26,6 +26,20 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SewerHome_EventScript_Sketchy_Guy",
       "flag": "FLAG_TEMP_1"
+    },
+    {
+      "local_id": "LOCALID_CRESTFALLEN",
+      "graphics_id": "OBJ_EVENT_GFX_FAT_MAN",
+      "x": 28,
+      "y": 24,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "SewerHome_EventScript_Crestfallen",
+      "flag": "0"
     }
   ],
   "warp_events": [
@@ -42,16 +56,16 @@
       "x": 16,
       "y": 4,
       "elevation": 0,
-      "dest_map": "MAP_ROUTE401",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_HOME_BARRACKS",
+      "dest_warp_id": "Twinleaf_Sewers"
     },
     {
       "warp_id": "WARP_ID_LAB",
       "x": 26,
       "y": 4,
       "elevation": 0,
-      "dest_map": "MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_HOME_DAWN_LAB",
+      "dest_warp_id": "DAWN_LAB"
     }
   ],
   "coord_events": [],

@@ -2,7 +2,7 @@
   "id": "MAP_ROUTE401",
   "name": "Route401",
   "layout": "LAYOUT_ROUTE401",
-  "music": "MUS_ROUTE_206",
+  "music": "MUS_SANDGEM",
   "region_map_section": "MAPSEC_ABANDONED_SHIP",
   "requires_flash": false,
   "weather": "WEATHER_NONE",

@@ -4165,7 +4165,8 @@ static void DebugAction_DestroyFollowerNPC(u8 taskId)
     X(MUS_ROUTE_206)                \
     X(MUS_DISCO)                    \
     X(MUS_LIGHT)                    \
-    X(MUS_DEDEDE)
+    X(MUS_DEDEDE)                   \
+    X(MUS_SANDGEM)
 
 #define SOUND_LIST_SE               \
     X(SE_USE_ITEM)                  \

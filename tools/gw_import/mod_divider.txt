@@ -1,0 +1,14 @@
+const track = 2;
+const cc = 1; // MOD
+const points = porydaw.song.lanePoints(track, cc);
+
+porydaw.edit.transaction("Scale MOD to 20%", () => {
+  porydaw.edit.moveLanePoints(
+    track,
+    cc,
+    points.map(({ tick, value }) => ({
+      tick,
+      newValue: Math.round(value * 0.2),
+    }))
+  );
+});

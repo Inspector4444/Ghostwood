@@ -1888,17 +1888,17 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_WATER_1, EGG_GROUP_GRASS),
         .abilities = { ABILITY_SWIFT_SWIM, ABILITY_RAIN_DISH, ABILITY_OWN_TEMPO },
         .bodyColor = BODY_COLOR_GREEN,
-        .speciesName = _("Lotad"),
+        .speciesName = _("Lowtad"),
         .cryId = CRY_LOTAD,
         .natDexNum = NATIONAL_DEX_LOTAD,
-        .categoryName = _("Water Weed"),
+        .categoryName = _("Manhole"),
         .height = 5,
-        .weight = 26,
+        .weight = 706,
         .description = COMPOUND_STRING(
-            "This Pokémon lives in ponds with clean\n"
-            "water. It is known to ferry small Pokémon\n"
-            "across ponds by carrying them on the\n"
-            "broad leaf on its head."),
+            "It finds shelter in defunct sewer systems.\n"
+            "Its legs grew strength to carry metal\n"
+            "with ease and absorb otherwise-deadly\n"
+            "impacts while trekking above ground."),
         .pokemonScale = 406,
         .pokemonOffset = 19,
         .trainerScale = 256,

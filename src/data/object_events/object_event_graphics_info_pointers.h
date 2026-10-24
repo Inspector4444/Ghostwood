@@ -389,6 +389,7 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_DeoxysN;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SSAnne;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Zombieman;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZombieWoman;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Dawn;
 // Begin Pokémon event objects
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_PokeBall;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Follower;
@@ -795,6 +796,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
 #endif // IS_FRLG
     [OBJ_EVENT_GFX_ZOMBIEMAN]                 = &gObjectEventGraphicsInfo_Zombieman,
     [OBJ_EVENT_GFX_ZOMBIEWOMAN]              = &gObjectEventGraphicsInfo_ZombieWoman,
+    [OBJ_EVENT_GFX_DAWN]                     = &gObjectEventGraphicsInfo_Dawn,
 };
 
 const struct ObjectEventGraphicsInfo *const gMauvilleOldManGraphicsInfoPointers[] = {

@@ -2498,3 +2498,7 @@ static const struct SpriteFrameImage sPicTable_MomFrlg[] = {
 static const struct SpriteFrameImage sPicTable_Zombie[] = {
     overworld_ascending_frames(gObjectEventPic_Zombieman, 2, 4),
 };
+
+static const struct SpriteFrameImage sPicTable_ZombieWoman[] = {
+    overworld_ascending_frames(gObjectEventPic_ZombieWoman, 2, 4),
+};

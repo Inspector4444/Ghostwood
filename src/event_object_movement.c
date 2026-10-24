@@ -535,6 +535,7 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_RubySapphireBrendan,   OBJ_EVENT_PAL_TAG_RS_BRENDAN},
     {gObjectEventPal_RubySapphireMay,       OBJ_EVENT_PAL_TAG_RS_MAY},
     {gObjectEventPal_Zombie,                OBJ_EVENT_PAL_TAG_ZOMBIEMAN},
+    {gObjectEventPal_ZombieWoman,           OBJ_EVENT_PAL_TAG_ZOMBIEWOMAN},
 
 #if IS_FRLG
     {gObjectEventPal_PlayerFrlg,            OBJ_EVENT_PAL_TAG_PLAYER_RED},
@@ -730,6 +731,7 @@ static const u16 sObjectPaletteTags0[] = {
     [PALSLOT_NPC_3_REFLECTION]  = OBJ_EVENT_PAL_TAG_NPC_3_REFLECTION,
     [PALSLOT_NPC_4_REFLECTION]  = OBJ_EVENT_PAL_TAG_NPC_4_REFLECTION,
     [PALSLOT_ZOMBIE]            = OBJ_EVENT_PAL_TAG_ZOMBIEMAN,
+    [PALSLOT_ZOMBIEWOMAN]       = OBJ_EVENT_PAL_TAG_ZOMBIEWOMAN,
 };
 
 static const u16 sObjectPaletteTags1[] = {

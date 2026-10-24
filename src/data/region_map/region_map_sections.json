@@ -666,7 +666,7 @@
     },
     {
       "id": "MAPSEC_ANCIENT_TOMB",
-      "name": "ANCIENT TOMB",
+      "name": "LAKE VERITY",
       "x": 13,
       "y": 2,
       "width": 1,
@@ -1609,7 +1609,7 @@
     },
     {
       "id": "MAPSEC_ALTERING_CAVE",
-      "name": "ALTERING CAVE",
+      "name": "TWINLEAF TOWN",
       "x": 6,
       "y": 8,
       "width": 1,

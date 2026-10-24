@@ -9338,7 +9338,7 @@
       "id": "LAYOUT_ROUTE401",
       "name": "Route401_Layout",
       "width": 80,
-      "height": 18,
+      "height": 22,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Petalburg",
       "border_filepath": "data/layouts/Route401/border.bin",
@@ -9363,6 +9363,26 @@
       "secondary_tileset": "gTileset_Lab",
       "border_filepath": "data/layouts/HomeDawnLab/border.bin",
       "blockdata_filepath": "data/layouts/HomeDawnLab/map.bin"
+    },
+    {
+      "id": "LAYOUT_TWINLEAF_TOWN",
+      "name": "TwinleafTown_Layout",
+      "width": 20,
+      "height": 28,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/TwinleafTown/border.bin",
+      "blockdata_filepath": "data/layouts/TwinleafTown/map.bin"
+    },
+    {
+      "id": "LAYOUT_LAKE_VERITY",
+      "name": "LakeVerity_Layout",
+      "width": 54,
+      "height": 46,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/LakeVerity/border.bin",
+      "blockdata_filepath": "data/layouts/LakeVerity/map.bin"
     }
   ]
 }

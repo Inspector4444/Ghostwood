@@ -2,7 +2,7 @@
   "id": "MAP_ROUTE401",
   "name": "Route401",
   "layout": "LAYOUT_ROUTE401",
-  "music": "MUS_SANDGEM",
+  "music": "MUS_ROUTE_206",
   "region_map_section": "MAPSEC_ABANDONED_SHIP",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -12,17 +12,20 @@
   "allow_running": false,
   "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": null,
-  "object_events": [],
-  "warp_events": [
+  "connections": [
     {
-      "x": 4,
-      "y": 4,
-      "elevation": 0,
-      "dest_map": "MAP_SEWER_HOME",
-      "dest_warp_id": "0"
+      "map": "MAP_TWINLEAF_TOWN",
+      "offset": 26,
+      "direction": "down"
+    },
+    {
+      "map": "MAP_LAKE_VERITY",
+      "offset": -36,
+      "direction": "up"
     }
   ],
+  "object_events": [],
+  "warp_events": [],
   "coord_events": [],
   "bg_events": []
 }

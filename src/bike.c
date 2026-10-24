@@ -4,6 +4,7 @@
 #include "field_player_avatar.h"
 #include "fieldmap.h"
 #include "field_specials.h"
+#include "ghostwood_movement.h"
 #include "metatile_behavior.h"
 #include "oras_dowse.h"
 #include "overworld.h"
@@ -14,7 +15,7 @@
 
 // this file's functions
 static void MovePlayerOnMachBike(enum Direction, u16, u16);
-static enum MachTransition GetMachBikeTransition(enum Direction *);
+static enum MachTransition GetMachBikeTransition(enum Direction *, u16);
 static void MachBikeTransition_FaceDirection(enum Direction);
 static void MachBikeTransition_TurnDirection(enum Direction);
 static void MachBikeTransition_TrySpeedUp(enum Direction);
@@ -226,6 +227,21 @@ static u8 StandardBikeInputHandler_Normal(u8 *direction_p, u16 newKeys, u16 held
     }
     else
     {
+        // Ghostwood: no tap-turn. The turn button only turns / faces, anything else rides off.
+        if (GW_OW_NO_TAP_TURN && gPlayerAvatar.runningState != MOVING)
+        {
+            if (!GW_Movement_IsTurnHeld(heldKeys))
+            {
+                gPlayerAvatar.runningState = MOVING;
+                return BIKE_TRANS_MOVE;
+            }
+            if (*direction_p == direction)
+            {
+                gPlayerAvatar.runningState = NOT_MOVING;
+                return BIKE_TRANS_FACE_DIRECTION;
+            }
+        }
+
         if (*direction_p != direction && gPlayerAvatar.runningState != MOVING)
         {
             gPlayerAvatar.acroBikeState = BIKE_STATE_TURNING;
@@ -348,11 +364,11 @@ static void StandardBikeTransition_Uphill(u8 direction)
 
 static void MovePlayerOnMachBike(enum Direction direction, u16 newKeys, u16 heldKeys)
 {
-    sMachBikeTransitions[GetMachBikeTransition(&direction)](direction);
+    sMachBikeTransitions[GetMachBikeTransition(&direction, heldKeys)](direction);
 }
 
 // dirTraveling is a variable that is DIR_NONE when the player is standing still.
-static enum MachTransition GetMachBikeTransition(enum Direction *dirTraveling)
+static enum MachTransition GetMachBikeTransition(enum Direction *dirTraveling, u16 heldKeys)
 {
     // if the dir updated before this function, get the relevent new direction to check later.
     enum Direction direction = GetPlayerMovementDirection();
@@ -383,6 +399,24 @@ static enum MachTransition GetMachBikeTransition(enum Direction *dirTraveling)
         }
         gPlayerAvatar.runningState = MOVING;
         return MACH_TRANS_START_MOVING;
+    }
+
+    // Ghostwood: from a standstill, any press rolls off in that direction. The turn
+    // button only turns (or faces, if already facing that way).
+    if (GW_OW_NO_TAP_TURN && gPlayerAvatar.bikeSpeed == PLAYER_SPEED_STANDING && gPlayerAvatar.runningState != MOVING)
+    {
+        if (!GW_Movement_IsTurnHeld(heldKeys))
+        {
+            gPlayerAvatar.runningState = MOVING;
+            return MACH_TRANS_KEEP_MOVING;
+        }
+        if (*dirTraveling == direction)
+        {
+            gPlayerAvatar.runningState = NOT_MOVING;
+            return MACH_TRANS_FACE_DIRECTION;
+        }
+        gPlayerAvatar.runningState = TURN_DIRECTION;
+        return MACH_TRANS_TURN_DIRECTION;
     }
 
     // we need to check if the last traveled direction changed from the new direction as well as ensuring that we dont update the state while the player is moving: see the else check.
@@ -584,8 +618,8 @@ static enum AcroTransition AcroBikeHandleInputTurning(enum Direction *newDirecti
     *newDirection = gPlayerAvatar.newDirBackup;
     gPlayerAvatar.bikeFrameCounter++;
 
-    // Wait 6 frames before actually changing direction
-    if (gPlayerAvatar.bikeFrameCounter > 6) // ... because it takes 6 frames to advance 1 tile.
+    // Wait 6 frames before actually changing direction (Ghostwood: GW_OW_ACRO_TURN_WINDOW, see header)
+    if (gPlayerAvatar.bikeFrameCounter > GW_OW_ACRO_TURN_WINDOW) // ... because it takes 6 frames to advance 1 tile.
     {
         gPlayerAvatar.runningState = TURN_DIRECTION;
         gPlayerAvatar.acroBikeState = ACRO_STATE_NORMAL;

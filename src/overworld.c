@@ -85,6 +85,7 @@
 #include "constants/trainer_hill.h"
 #include "constants/weather.h"
 #include "zombie_horde.h"
+#include "ghostwood_movement.h"
 
 STATIC_ASSERT((B_FLAG_FOLLOWERS_DISABLED == 0 || OW_FOLLOWERS_ENABLED), FollowersFlagAssignedWithoutEnablingThem);
 
@@ -1658,6 +1659,7 @@ static void DoCB1_Overworld(u16 newKeys, u16 heldKeys)
     struct FieldInput inputStruct;
 
     UpdatePlayerAvatarTransitionState();
+    GW_Movement_UpdateInput(newKeys, heldKeys);
     FieldClearPlayerInput(&inputStruct);
     FieldGetPlayerInput(&inputStruct, newKeys, heldKeys);
     CancelSignPostMessageBox(&inputStruct);
@@ -1667,11 +1669,16 @@ static void DoCB1_Overworld(u16 newKeys, u16 heldKeys)
         {
             LockPlayerFieldControls();
             HideMapNamePopUpWindow();
+            GW_Movement_ClearBuffer();
         }
         else
         {
             PlayerStep(inputStruct.dpadDirection, newKeys, heldKeys);
         }
+    }
+    else
+    {
+        GW_Movement_ClearBuffer();
     }
     // If stop running but keep holding B -> fix follower frame.
     if (PlayerHasFollowerNPC() && (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_ON_FOOT) && IsPlayerStandingStill())

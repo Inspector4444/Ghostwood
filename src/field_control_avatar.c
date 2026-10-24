@@ -7,6 +7,7 @@
 #include "dexnav.h"
 #include "faraway_island.h"
 #include "follower_npc.h"
+#include "ghostwood_movement.h"
 #include "event_data.h"
 #include "event_object_movement.h"
 #include "event_scripts.h"
@@ -140,14 +141,9 @@ void FieldGetPlayerInput(struct FieldInput *input, u16 newKeys, u16 heldKeys)
             input->checkStandardWildEncounter = TRUE;
     }
 
-    if (heldKeys & DPAD_UP)
-        input->dpadDirection = DIR_NORTH;
-    else if (heldKeys & DPAD_DOWN)
-        input->dpadDirection = DIR_SOUTH;
-    else if (heldKeys & DPAD_LEFT)
-        input->dpadDirection = DIR_WEST;
-    else if (heldKeys & DPAD_RIGHT)
-        input->dpadDirection = DIR_EAST;
+    // Ghostwood: last-pressed-wins + input buffer. With those toggled off this
+    // falls back to the vanilla Up > Down > Left > Right priority.
+    input->dpadDirection = GW_Movement_GetDpadDirection();
 
     if (DEBUG_OVERWORLD_MENU && !DEBUG_OVERWORLD_IN_MENU)
     {

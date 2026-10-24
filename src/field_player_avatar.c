@@ -11,6 +11,7 @@
 #include "field_player_avatar.h"
 #include "fieldmap.h"
 #include "follower_npc.h"
+#include "ghostwood_movement.h"
 #include "menu.h"
 #include "metatile_behavior.h"
 #include "oras_dowse.h"
@@ -97,7 +98,7 @@ static bool8 ForcedMovement_SpinDown(void);
 static void PlaySpinSound(void);
 
 static void MovePlayerNotOnBike(enum Direction, u16);
-static u8 CheckMovementInputNotOnBike(enum Direction);
+static u8 CheckMovementInputNotOnBike(enum Direction, u16);
 static void PlayerNotOnBikeNotMoving(enum Direction, u16);
 static void PlayerNotOnBikeTurningInPlace(enum Direction, u16);
 static void PlayerNotOnBikeMoving(enum Direction, u16);
@@ -367,6 +368,7 @@ void PlayerStep(enum Direction direction, u16 newKeys, u16 heldKeys)
         Bike_TryAcroBikeHistoryUpdate(newKeys, heldKeys);
         if (TryInterruptObjectEventSpecialAnim(playerObjEvent, direction) == 0)
         {
+            GW_Movement_OnInputConsumed();
             npc_clear_strange_bits(playerObjEvent);
             DoPlayerAvatarTransition();
             if (TryDoMetatileBehaviorForcedMovement() == 0)
@@ -713,17 +715,21 @@ static void PlaySpinSound(void)
 
 static void MovePlayerNotOnBike(enum Direction direction, u16 heldKeys)
 {
-    sPlayerNotOnBikeFuncs[CheckMovementInputNotOnBike(direction)](direction, heldKeys);
+    sPlayerNotOnBikeFuncs[CheckMovementInputNotOnBike(direction, heldKeys)](direction, heldKeys);
 }
 
-static u8 CheckMovementInputNotOnBike(enum Direction direction)
+static u8 CheckMovementInputNotOnBike(enum Direction direction, u16 heldKeys)
 {
+#if GW_OW_NO_TAP_TURN
+    return gPlayerAvatar.runningState = GW_Movement_GetWalkState(direction, heldKeys);
+#else
     if (direction == DIR_NONE)
         return gPlayerAvatar.runningState = NOT_MOVING;
     else if (direction != GetPlayerMovementDirection() && gPlayerAvatar.runningState != MOVING)
         return gPlayerAvatar.runningState = TURN_DIRECTION;
     else
         return gPlayerAvatar.runningState = MOVING;
+#endif
 }
 
 static void PlayerNotOnBikeNotMoving(enum Direction direction, u16 heldKeys)

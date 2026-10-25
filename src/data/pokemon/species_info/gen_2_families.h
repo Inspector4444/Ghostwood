@@ -2380,7 +2380,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .baseSpAttack  = 20,
         .baseSpDefense = 50,
     #if P_UPDATED_TYPES >= GEN_6
-        .types = MON_TYPES(TYPE_WATER, TYPE_FAIRY),
+        .types = MON_TYPES(TYPE_WATER, TYPE_POISON),
     #else
         .types = MON_TYPES(TYPE_WATER),
     #endif
@@ -2394,7 +2394,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_WATER_1, EGG_GROUP_FAIRY),
         .abilities = { ABILITY_THICK_FAT, ABILITY_HUGE_POWER, ABILITY_SAP_SIPPER },
         .bodyColor = BODY_COLOR_BLUE,
-        .speciesName = _("Marill"),
+        .speciesName = _("Graveill"),
         .cryId = CRY_MARILL,
         .natDexNum = NATIONAL_DEX_MARILL,
         .categoryName = _("Aqua Mouse"),
@@ -2453,7 +2453,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .baseSpAttack  = P_UPDATED_STATS >= GEN_6 ? 60 : 50,
         .baseSpDefense = 80,
     #if P_UPDATED_TYPES >= GEN_6
-        .types = MON_TYPES(TYPE_WATER, TYPE_FAIRY),
+        .types = MON_TYPES(TYPE_WATER, TYPE_POISON),
     #else
         .types = MON_TYPES(TYPE_WATER),
     #endif
@@ -2476,7 +2476,7 @@ const struct SpeciesInfo gSpeciesInfoGen2[] =
         .abilities = { ABILITY_THICK_FAT, ABILITY_HUGE_POWER, ABILITY_SAP_SIPPER },
         .bodyColor = BODY_COLOR_BLUE,
         .noFlip = TRUE,
-        .speciesName = _("Azumarill"),
+        .speciesName = _("Azombarill"),
         .cryId = CRY_AZUMARILL,
         .natDexNum = NATIONAL_DEX_AZUMARILL,
         .categoryName = _("Aqua Rabbit"),

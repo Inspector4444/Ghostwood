@@ -1752,3 +1752,5 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/maps/TwinleafTown/scripts.inc"
 
 	.include "data/maps/LakeVerity/scripts.inc"
+
+	.include "data/maps/SandgemTown/scripts.inc"

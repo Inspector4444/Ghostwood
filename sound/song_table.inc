@@ -573,6 +573,7 @@ gSongTable::
 	song mus_dedede, MUSIC_PLAYER_BGM, 0
 	song mus_sandgem, MUSIC_PLAYER_BGM, 0
 	song mus_song460, MUSIC_PLAYER_BGM, 0
+	song mus_vs_sdf, MUSIC_PLAYER_BGM, 0
 	song ph_trap_blend, MUSIC_PLAYER_SE2, 2
 	song ph_trap_held, MUSIC_PLAYER_SE2, 2
 	song ph_trap_solo, MUSIC_PLAYER_SE2, 2
